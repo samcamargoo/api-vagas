@@ -21,39 +21,40 @@ public class JWTTokenService {
 	private Long expiracao;
 
 	SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-	
+
 	/**
 	 * @param authentication
 	 * @return
 	 */
 	public String gerarToken(Authentication authentication) {
-		return Jwts.builder()
-					.setIssuer("Api vagas")
-					.setIssuedAt(new Date())
-					.setExpiration(new Date(System.currentTimeMillis() + expiracao))
-					.signWith(key).compact();
-					
+
+		String token = Jwts.builder().setSubject(authentication.getName()).setIssuer("Api vagas")
+				.setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + expiracao)).signWith(key)
+				.compact();
+
+		return token;
+
 	}
-	
+
 	public boolean isTokenValido(String token) {
 		try {
 			getInformacoesDoToken(token);
 			return true;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
-	
-	public Long getIdUsuario(String token) {
-		return Long.parseLong(getClaimFromToken(token, Claims::getSubject));
+
+	public String getIdUsuario(String token) {
+		return getClaimFromToken(token, Claims::getSubject);
 	}
-	
+
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = getInformacoesDoToken(token);
 		return claimsResolver.apply(claims);
 	}
-	
+
 	private Claims getInformacoesDoToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-    }
+		return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+	}
 }
