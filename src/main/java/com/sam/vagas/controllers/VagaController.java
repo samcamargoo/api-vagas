@@ -54,7 +54,7 @@ public class VagaController {
 	
 	@PutMapping("/{id}")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Object> editarVagaPorId(@PathVariable (name = "id") UUID id, @RequestBody VagaRequestDto vagaRequestDto) {
+	public ResponseEntity<Object> editarVagaPorId(@PathVariable (name = "id") UUID id, @RequestBody  @Valid VagaRequestDto vagaRequestDto) {
 		return vagaService.editarVagaPorId(id, vagaRequestDto);
 	}
 }

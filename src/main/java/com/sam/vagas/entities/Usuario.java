@@ -42,7 +42,7 @@ public class Usuario implements UserDetails, Serializable {
 	@Column(nullable = false, unique = true)
 	private String email;
 	private String password;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String telefone;
 	private boolean aceitaInformacoesPorEmail;
 	private boolean premium;

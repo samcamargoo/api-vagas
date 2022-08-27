@@ -1,6 +1,8 @@
 package com.sam.vagas.services;
 
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -41,7 +43,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuarioRepository.save(usuario);
 
 		var usuarioDto = new UsuarioResponseDto(usuario.getNome(), usuario.getSobrenome(), usuario.getEmail());
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDto);
+
 	}
 
 	@Override
@@ -60,5 +64,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		return user;
 	}
+
+	@Override
+	public String getUsuarioNome(String email) {
+		
+		Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+		String nome = usuarioOptional.get().getNome();
+		return nome;
+	}
+
 
 }

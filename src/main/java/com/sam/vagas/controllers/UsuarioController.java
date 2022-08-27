@@ -28,6 +28,8 @@ public class UsuarioController {
 		return usuarioService.cadastrarUsuario(usuario);
 	}
 	
+	
+	
 	@GetMapping
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String get() {

@@ -1,5 +1,6 @@
 package com.sam.vagas.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,7 +47,7 @@ public class VagaServiceImpl implements VagaService {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado");
 		}
 
-		if (!usuarioOptional.get().isPremium() && listaDeVagas.size() > 1) {
+		if (!usuarioOptional.get().isPremium() && listaDeVagas.size() > 5) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
 					.body("Você excedeu o máximo de vagas cadastradas para usuários gratuitos");
 		}
@@ -55,6 +56,7 @@ public class VagaServiceImpl implements VagaService {
 
 		// relaciona a vaga a ser cadastrada com o usuario logado
 		vaga.setUsuario(usuarioOptional.get());
+		vaga.setAdicionadaEm(LocalDateTime.now());
 		vagaRepository.save(vaga);
 
 		vagaRequestDto.setId(vaga.getId());
@@ -148,6 +150,7 @@ public class VagaServiceImpl implements VagaService {
 		BeanUtils.copyProperties(vagaRequestDto, vaga);
 		vaga.setId(vagaOptional.get().getId());
 		vaga.setUsuario(vagaOptional.get().getUsuario());
+		vaga.setAdicionadaEm(vagaOptional.get().getAdicionadaEm());
 		vagaRepository.save(vaga);
 
 		var vagaResponseDto = new VagaResponseDto(vaga);

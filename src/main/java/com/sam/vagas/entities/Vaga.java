@@ -1,6 +1,7 @@
 package com.sam.vagas.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.sam.vagas.enums.ModeloTrabalhoEnum;
 import com.sam.vagas.enums.VagasEnum;
 
 import lombok.AllArgsConstructor;
@@ -32,12 +34,16 @@ public class Vaga implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private UUID id;
 	@Column(nullable = false)
-	private String titulo;
+	private String cargo;
 	@Column(nullable = false)
 	private String descricao;
 	@Enumerated(EnumType.STRING)
-	private VagasEnum tipo;
+	private VagasEnum senioridade;
 	
+	private LocalDateTime adicionadaEm;
+
+	@Enumerated(EnumType.STRING)
+	private ModeloTrabalhoEnum modelo;
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
