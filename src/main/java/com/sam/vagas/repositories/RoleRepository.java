@@ -12,6 +12,5 @@ import com.sam.vagas.enums.RolesEnum;
 public interface RoleRepository extends JpaRepository<Roles, UUID> {
 
 	@Query("SELECT r from Roles r WHERE r.rolesEnum = :role")
-	//@Query("SELECT r from Roles r WHERE r.rolesEnum = com.sam.estoque.enums.RolesEnum.ROLE_USER")
 	Roles findRole(@Param("role") RolesEnum roles);
 }

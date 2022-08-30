@@ -21,26 +21,10 @@ import lombok.AllArgsConstructor;
 public class UsuarioController {
 
 	final UsuarioService usuarioService;
-	
-	
+
 	@PostMapping("/cadastro")
 	public ResponseEntity<Object> cadastrarUsuario(@RequestBody Usuario usuario) {
 		return usuarioService.cadastrarUsuario(usuario);
 	}
-	
-	
-	
-	@GetMapping
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String get() {
-		return "hello";
-	}
-	
-	@GetMapping("/usuario-normal")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	public String usuario() {
-		return "voce é usuario";
-	}
-	
-	
+
 }
